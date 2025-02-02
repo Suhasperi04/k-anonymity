@@ -16,9 +16,6 @@
   - K-Nearest Neighbors
 
 
-## 📖 Reports
-- Report edit link: [link](./demo/report.pdf)
-- Slide link: [link](./demo/slides.pdf)
 
 ## Folder Structure
 - A dataset must comes with a .csv file contains features information and a hierarchy folder which contains predefined generalization hierarchies for its QID attributes. 
@@ -91,15 +88,3 @@ Results will be in ```demo/{metrics.png, metrics_ml.png}```
 
 
 
-## References:
-- Basic Mondrian, Top-Down Greedy, Cluster-based (https://github.com/fhstp/k-AnonML)
-- L-Diversity (https://github.com/Nuclearstar/K-Anonymity, https://github.com/qiyuangong/Mondrian_L_Diversity)
-- Classic Mondrian (https://github.com/qiyuangong/Mondrian)
-- Datafly Algorithm (https://github.com/nazilkbahar/python-datafly)
-- Normalized Certainty Penalty from [Utility-Based Anonymization for Privacy Preservation with
-Less Information Loss](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.450.6140&rep=rep1&type=pdf)
-- Discernibility, Average Equivalent Class Size from [A Systematic Comparison and Evaluation
-of k-Anonymization Algorithms
-for Practitioners](http://www.tdp.cat/issues11/tdp.a169a14.pdf)
-- [Privacy in a Mobile-Social World](https://courses.cs.duke.edu//fall12/compsci590.3/slides/lec3.pdf)
-- Code and idea based on [k-Anonymity in Practice: How Generalisation and Suppression Affect Machine Learning Classifiers](https://arxiv.org/abs/2102.04763)
