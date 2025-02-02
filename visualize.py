@@ -1,18 +1,19 @@
-
 from operator import sub
 import os
 import numpy as np
 import matplotlib.pyplot as plt
 from argparse import Namespace
-
+import pandas as pd
 from anonymize import Anonymizer
 from models import classifier_evaluation
 from datasets import get_dataset_params
 from algorithms import read_tree
 
-methods = ['mondrian', 'classic_mondrian', 'topdown'] #['cluster', 'datafly']
-dataset = ['adult', 'cahousing', 'cmc', 'mgm', 'informs']  # italia
-k_array = [i for i in range(10, 110, 10)]
+# methods = ['mondrian', 'classic_mondrian', 'topdown'] #['cluster', 'datafly']
+# dataset = ['adult', 'cahousing', 'cmc', 'mgm', 'informs']  # italia
+methods = ['mondrian'] #['cluster', 'datafly']
+dataset = ['adult']  # italia
+k_array = [i for i in range(10, 20, 10)]
 
 metrics = ['ncp', 'cav', 'dm']
 ml_metrics = ['knn', 'svm', 'rf']
@@ -30,7 +31,6 @@ ml_metric_names = [
 ]
 
 def sub_plot(result, dataset, methods, metrics, label_x, label_y, figname):
-
     fig, axis = plt.subplots(nrows = len(metrics), ncols = len(dataset), figsize = (35, 30))
     
     for row, metric in enumerate(metrics):
@@ -69,7 +69,6 @@ def sub_plot(result, dataset, methods, metrics, label_x, label_y, figname):
 
 
 def sub_plot_ml(result, dataset, methods, models, label_x, label_y, figname):
-
     fig, axis = plt.subplots(nrows = len(models), ncols = len(dataset), figsize = (35, 30))
     
     for col, model in enumerate(models):
@@ -122,7 +121,6 @@ def plot_metric_ml(col, dataset, methods, models, label_x, label_y, figname):
 
 
 def run_anon_data():
-
     output = open("metric_result", "w")
 
     for data in dataset:
@@ -140,7 +138,6 @@ def run_anon_data():
     output.close()
 
 def run_anon_data_ml():
-    import pandas as pd
     data_path = './data'
     result_path = './results'
     output = open("ml_metric_result", "w")
@@ -167,6 +164,12 @@ def run_anon_data_ml():
             for method in methods:
                 for k in k_array:
                     anon_csv = os.path.join(result_path, data, method, f'{data}_anonymized_{k}.csv')
+                    
+                    # Check if file exists before processing
+                    if not os.path.exists(anon_csv):
+                        print(f"Skipping missing file for {data}, {method}, k={k}: {anon_csv}")
+                        continue
+
                     tmp_att_trees = ATT_TREES
                     if method == 'classic_mondrian':
                         tmp_att_trees = None
@@ -184,21 +187,8 @@ def run_anon_data_ml():
                     output.write(result + '\n')
     output.close()
 
-
 if __name__ == '__main__':
-
     # Metric evaluation
-    # run_anon_data()
-    # plot_metric(
-    #     col = ["data", "method", "k", "ncp", "cav", "dm"],
-    #     metrics = metrics,
-    #     dataset=dataset,
-    #     methods=methods,
-    #     label_x= dataset,
-    #     label_y = metric_names,
-    #     figname='./demo/metrics'
-    # )
-
     run_anon_data_ml()
     plot_metric_ml(
         col = ["data", "method", "k", "model" ,"ori_f1", "anon_f1"],
